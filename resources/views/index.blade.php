@@ -25,11 +25,13 @@
             <th scope="row">{{$cliente->id}}</th>
             <td>{{$cliente->nombre}} </td>
             <td>{{$cliente->telefono}}</td>
-            <td>@if ($cliente->tipo_documento == 101)
-                Cedula
-            @else
-                NIT
-            @endif</td>
+            <td>@foreach ($detalle as $items)
+                    @if ($items->id_categoria == 1)
+                        @if ($items->id == $cliente->tipo_documento )
+                            {{$items->nombre}}
+                        @endif
+                    @endif
+                @endforeach</td>
             <td>{{$cliente->identificacion}}</td>
             <td>{{$cliente->direccion}}</td>
             <td>{{$cliente->correo}}</td>

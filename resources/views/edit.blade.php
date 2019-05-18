@@ -15,8 +15,13 @@
               <div class="col-md-4 mb-3">
                 <label for="validationDefault02">Tipo Documento</label>
                 <select name="txttipo" id="input" class="form-control">
-                        <option value="{{ $cliente->tipo_documento }}" >seleccione</option>
-                        <option value="101">Cedula</option>
+                    @foreach ($detalle as $items)
+                        @if ($items->id_categoria == 1)
+                            @if ($items->id == $cliente->tipo_documento )
+                            <option value="{{$items->id}}">{{$items->nombre}}</option>
+                            @endif
+                          @endif
+                    @endforeach
                 </select>
               </div>
               <div class="col-md-4 mb-3">

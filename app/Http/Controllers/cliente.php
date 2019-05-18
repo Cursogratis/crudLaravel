@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\avicola;
 use PHPUnit\Framework\MockObject\Stub\Exception;
+use App\detalle;
 
 class cliente extends Controller
 {
@@ -17,7 +18,8 @@ class cliente extends Controller
     {
         //$users = DB::select('select * from avicola.cliente, avicola.detalle where tipo_documento = detalle.id AND estado = 1');
         $cliente = avicola::all();
-        return view('index', compact('cliente'));
+        $detalle = detalle::all();
+        return view('index', compact('cliente','detalle'));
        // return view('index', ['users' => $users]);
     }
 
@@ -28,7 +30,8 @@ class cliente extends Controller
      */
     public function create()
     {
-        return view('formulario');
+        $detalle = detalle::all();
+        return view('formulario',compact('detalle'));
     }
 
     /**
@@ -83,7 +86,8 @@ class cliente extends Controller
     public function edit($id)
     {
         $cliente = avicola::findorfail($id);
-        return view('edit', compact('cliente'));
+        $detalle = detalle::all();
+        return view('edit', compact('cliente','detalle'));
     }
 
     /**
