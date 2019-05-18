@@ -4,6 +4,8 @@ namespace App\Http\Controllers;
 //use Illuminate\Support\Facades\DB; 
 use Illuminate\Http\Request;
 use App\avicola;
+use PHPUnit\Framework\MockObject\Stub\Exception;
+
 class cliente extends Controller
 {
     /**
@@ -40,6 +42,17 @@ class cliente extends Controller
         /*DB::insert('insert into cliente (nombre,tipo_documento,identificacion,telefono,direccion,correo,estado) values (?,?,?,?,?,?,?)', 
         [ $request->txtnombre, $request->txttipo,$request->txtdocumento,$request->txttelefono,$request->txtdireccion,$request->txtcorreo,'estado'=>1]);
         */
+        
+        $cliente = new avicola();   
+        $cliente->nombre = $request->txtnombre;
+        $cliente->tipo_documento = $request->txttipo;
+        $cliente->identificacion = $request->txtdocumento;
+        $cliente->telefono = $request->txttelefono;
+        $cliente->direccion = $request->txtdireccion;
+        $cliente->correo= $request->txtcorreo;
+        $cliente->estado= 1;
+        $cliente->save();
+       return redirect()->route('cliente.index');
         /*
         $persona->nombre = $request->txtnombre;
         $persona->apellidos = $request->txtapellido;
@@ -69,7 +82,8 @@ class cliente extends Controller
      */
     public function edit($id)
     {
-        //
+        $cliente = avicola::findorfail($id);
+        return view('edit', compact('cliente'));
     }
 
     /**
@@ -81,7 +95,16 @@ class cliente extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $cliente = avicola::find($id);
+        $cliente->nombre = $request->txtnombre;
+        $cliente->tipo_documento = $request->txttipo;
+        $cliente->identificacion = $request->txtdocumento;
+        $cliente->telefono = $request->txttelefono;
+        $cliente->direccion = $request->txtdireccion;
+        $cliente->correo= $request->txtcorreo;
+        $cliente->estado= 1;
+        $cliente->save();
+        return redirect()->route('cliente.index');
     }
 
     /**
@@ -92,6 +115,13 @@ class cliente extends Controller
      */
     public function destroy($id)
     {
-        //
+        try{
+            $cliente = avicola::find($id);
+            $cliente->delete();
+            return redirect()->route('cliente.index');
+        }catch (Exception $e){
+            return "fatal error - ".$e->getMessage();
+        }
+       
     }
 }

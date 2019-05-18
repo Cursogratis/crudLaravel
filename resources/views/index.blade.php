@@ -25,12 +25,26 @@
             <th scope="row">{{$cliente->id}}</th>
             <td>{{$cliente->nombre}} </td>
             <td>{{$cliente->telefono}}</td>
-            <td>{{$cliente->tipo_documento}}</td>
+            <td>@if ($cliente->tipo_documento == 101)
+                Cedula
+            @else
+                NIT
+            @endif</td>
             <td>{{$cliente->identificacion}}</td>
             <td>{{$cliente->direccion}}</td>
             <td>{{$cliente->correo}}</td>
-            <td><button type="button" class="btn btn-primary">editar</button></td>
-            <td><button type="button" class="btn btn-primary">eliminar</button></td>
+            <td>
+                <form action="/cliente/{{$cliente ->id}}/edit" method="GET">
+                    @csrf
+                    <button type="submit" class="btn btn-primary">editar</button>
+                </form>
+            </td>
+            <td><form action="/cliente/{{$cliente ->id}}" method="POST">
+                @method('DELETE')
+                @csrf
+                <button type="submit" class="btn btn-primary">borrar</button>
+            </form>
+            </td>
         </tr>
     @endforeach
     </tbody>
