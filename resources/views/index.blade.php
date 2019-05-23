@@ -36,10 +36,7 @@
             <td>{{$cliente->direccion}}</td>
             <td>{{$cliente->correo}}</td>
             <td>
-                <form action="/cliente/{{$cliente ->id}}/edit" method="GET">
-                    @csrf
-                    <button type="submit" class="btn btn-primary">editar</button>
-                </form>
+                <a href="/cliente/{{$cliente ->id}}/edit" class="btn btn-primary">editar</a>
             </td>
             <td><form action="/cliente/{{$cliente ->id}}" method="POST">
                 @method('DELETE')
